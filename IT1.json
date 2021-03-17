@@ -1,0 +1,284 @@
+{
+	"info": {
+		"_postman_id": "06f347c5-d62d-4b39-8561-96a1ca547fb2",
+		"name": "Calculator",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "BR1 Addition",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    pm.expect(pm.response.text()).to.include(\"AddResult\");\r",
+							"});\r",
+							"\r",
+							"let a = pm.environment.get(\"intA\");\r",
+							"let b = pm.environment.get(\"intB\");\r",
+							"let sum = a + b;\r",
+							"\r",
+							"//XML Body to JSON object\r",
+							"var jsonObject = xml2Json(responseBody);\r",
+							"var rAddresult = +jsonObject['soap:Envelope']['soap:Body']['AddResponse']['AddResult'];\r",
+							"console.log(rAddresult);\r",
+							"\r",
+							"if (sum === rAddresult){\r",
+							"    tests[\"Add result of\" + a + \" pluse \" + b + \" is \" + sum] = true\r",
+							"} else{\r",
+							"    tests[\"Add result of\" + a + \" pluse \" + b + \" is \" + sum + \"| but response is \" + rAddresult] = false\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"intA\", _.random(-100, 100));\r",
+							"pm.environment.set(\"intB\", _.random(1, 50));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Charset",
+						"value": "utf-8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">\r\n   <soapenv:Header/>\r\n   <soapenv:Body>\r\n      <tem:Add>\r\n         <tem:intA>{{intA}}</tem:intA>\r\n         <tem:intB>{{intB}}</tem:intB>\r\n      </tem:Add>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>\r\n"
+				},
+				"url": {
+					"raw": "{{url}}",
+					"host": [
+						"{{url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BR2 Subtract",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    pm.expect(pm.response.text()).to.include(\"SubtractResult\");\r",
+							"});\r",
+							"\r",
+							"let a = pm.environment.get(\"intA\");\r",
+							"let b = pm.environment.get(\"intB\");\r",
+							"let Sub = a - b;\r",
+							"\r",
+							"//XML Body to JSON object\r",
+							"var jsonObject = xml2Json(responseBody);\r",
+							"var rSubresult = +jsonObject['soap:Envelope']['soap:Body']['SubtractResponse']['SubtractResult'];\r",
+							"console.log(rSubresult);\r",
+							"\r",
+							"if (Sub === rSubresult){\r",
+							"    tests[\"Sub result of\" + a + \" minus \" + b + \" is \" + Sub] = true\r",
+							"} else{\r",
+							"    tests[\"Sub result of\" + a + \" minus \" + b + \" is \" + Sub + \"| but response is \" + rSubresult] = false\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"intA\", _.random(-100, 100));\r",
+							"pm.environment.set(\"intB\", _.random(1, 50));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Charset",
+						"value": "utf-8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">\r\n   <soapenv:Header/>\r\n   <soapenv:Body>\r\n      <tem:Subtract>\r\n         <tem:intA>{{intA}}</tem:intA>\r\n         <tem:intB>{{intB}}</tem:intB>\r\n      </tem:Subtract>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>\r\n\r\n</soapenv:Envelope>\r\n"
+				},
+				"url": {
+					"raw": "{{url}}",
+					"host": [
+						"{{url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BR3 Divide",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    pm.expect(pm.response.text()).to.include(\"DivideResult\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"let a = +pm.environment.get(\"intA\");\r",
+							"let b = +pm.environment.get(\"intB\");\r",
+							"let div = Math.round(a/b);\r",
+							"\r",
+							"\r",
+							"let jsonObject = xml2Json(responseBody);\r",
+							"let result = +jsonObject['soap:Envelope']['soap:Body']['DivideResponse']['DivideResult']\r",
+							"\r",
+							"if ((div===result+1)  || (div===result)){\r",
+							"    tests[\"Divide\"] = true;\r",
+							"}else{\r",
+							"    tests[\"Divide\"] = false;\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Charset",
+						"value": "utf-8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">\r\n    <soapenv:Header/>\r\n    <soapenv:Body>\r\n        <tem:Divide>\r\n            <tem:intA>{{intA}}</tem:intA>\r\n            <tem:intB>{{intB}}</tem:intB>\r\n        </tem:Divide>\r\n    </soapenv:Body>\r\n</soapenv:Envelope>"
+				},
+				"url": {
+					"raw": "{{url}}",
+					"host": [
+						"{{url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BR4 Multiply",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    pm.expect(pm.response.text()).to.include(\"MultiplyResult\");\r",
+							"});\r",
+							"\r",
+							"let a = pm.environment.get(\"intA\");\r",
+							"let b = pm.environment.get(\"intB\");\r",
+							"let Mul = a * b;\r",
+							"\r",
+							"//XML Body to JSON object\r",
+							"var jsonObject = xml2Json(responseBody);\r",
+							"var rMulresult = +jsonObject['soap:Envelope']['soap:Body']['MultiplyResponse']['MultiplyResult'];\r",
+							"console.log(rMulresult);\r",
+							"\r",
+							"if (Mul === rMulresult){\r",
+							"    tests[\"Mul result of\" + a + \" Multiply \" + b + \" is \" + Mul] = true\r",
+							"} else{\r",
+							"    tests[\"Mul result of\" + a + \" Multiply \" + b + \" is \" + Mul + \"| but response is \" + rMulresult] = false\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"intA\", _.random(-100, 100));\r",
+							"pm.environment.set(\"intB\", _.random(1, 50));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Charset",
+						"value": "utf-8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">\r\n   <soapenv:Header/>\r\n   <soapenv:Body>\r\n      <tem:Multiply>\r\n         <tem:intA>{{intA}}</tem:intA>\r\n         <tem:intB>{{intB}}</tem:intB>\r\n      </tem:Multiply>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>\r\n\r\n"
+				},
+				"url": {
+					"raw": "{{url}}",
+					"host": [
+						"{{url}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
