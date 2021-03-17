@@ -1,2 +1,11 @@
 abcdefghijklmno
+<<<<<<< HEAD
 aksdhakdkDSAK
+=======
+<<<<<<< HEAD
+Pratice make man perfect!!!:)
+=======
+abcdefghijklmno
+This is GIT test
+>>>>>>> d1f59dc014a6be977daca308b8a4786522d289ca
+>>>>>>> d855d1456e7f73d4d149955b400fdfcd009a37d6
